@@ -1,4 +1,5 @@
 classdef SOCBattery_test < matlab.unittest.TestCase
+    %ssde
     properties (Access = private)
         testResults
     end
