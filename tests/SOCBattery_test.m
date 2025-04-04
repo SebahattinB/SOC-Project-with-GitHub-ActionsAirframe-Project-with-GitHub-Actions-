@@ -7,13 +7,13 @@ classdef SOCBattery_test < matlab.unittest.TestCase
     methods(TestClassSetup)
         function runBatterySOCTestSuite(testCase)
             % Import the runner
-            import matlab.unittest.TestRunner
+            runner = matlab.unittest.TestRunner.withNoPlugins;
             
             % Create the suite from your test file or folder
             suite = testsuite("BatterySOCSysIntTest");
             
             % Create a runner with no plugins
-            runner = TestRunner.withNoPlugins;
+           
             
             % Run once, store the results for use in all test methods
             testCase.testResults = run(runner, suite);
