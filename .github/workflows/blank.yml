@@ -31,7 +31,6 @@ jobs:
             MATLAB
             Simulink
             Simulink_Test
-            Simulink_Requirements
             Parallel_Computing_Toolbox
             Deep_Learning_Toolbox
         
