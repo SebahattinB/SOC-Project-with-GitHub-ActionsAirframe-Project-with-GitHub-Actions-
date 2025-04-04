@@ -1,47 +1,86 @@
 classdef SOCBattery_test < matlab.unittest.TestCase
+    % SOCBattery_test
+    % Bu sınıf, BatterySOCSysIntTest dosyasında bulunan ilk 4 testin
+    % geçtiğini doğrulamaya yarar.
+
     properties (Access = private)
-        testResults
+        testResults  % BatterySOCSysIntTest çıktısındaki tüm TestResult nesneleri
     end
-    
-    methods(TestClassSetup)
+
+    methods (TestClassSetup)
         function runBatterySOCTestSuite(testCase)
-            % Import the runner
+            % BatterySOCSysIntTest test dosyasını çalıştırıp sonuçlarını kaydetmek
             import matlab.unittest.TestRunner
             
-            % Create the suite from your test file or folder
-            suite = testsuite("BatterySOCSysIntTest");
+            % Önce test suite'ini oluşturmayı deneyin. Dosya yoksa veya hata varsa yakalayın.
+            try
+                suite = testsuite("BatterySOCSysIntTest");
+            catch ME
+                testCase.fatalAssertFail(sprintf("BatterySOCSysIntTest dosyası bulunamadı veya oluşturulamadı:\n%s", ME.message));
+            end
             
-            % Create a runner with no plugins
+            % Plugin'siz basit bir TestRunner oluşturun
             runner = TestRunner.withNoPlugins;
             
-            % Run once, store the results for use in all test methods
-            testCase.testResults = run(runner, suite);
+            % Suite'i bir kez çalıştırın
+            results = run(runner, suite);
+            
+            % Test sayısı kontrolü: En az 4 adet test bekliyoruz
+            testCase.assertGreaterThanOrEqual(numel(results), 4, ...
+                sprintf(['BatterySOCSysIntTest içinde en az 4 test olduğu varsayılıyor,\n' ...
+                         'ancak yalnızca %d test bulundu.'], numel(results)));
+            
+            % Sonuçları saklayın
+            testCase.testResults = results;
         end
     end
-    
-    methods(Test)
+
+    methods (Test)
         function verify_1(testCase)
-            % Check that the 1st test in BatterySOCSysIntTest passed
-            testCase.verifyTrue(testCase.testResults(1).Passed, ...
-                'The 1st test in BatterySOCSysIntTest failed.');
+            % 1. testi kontrol et
+            res = testCase.testResults(1);
+            testCase.verifyTrue(res.Passed, ...
+                sprintf(['1. test başarısız oldu.\n' ...
+                         'Test Adı: %s\n' ...
+                         'Detay: %s'], res.Name, localGetFailureDetails(res)));
         end
-        
+
         function verify_2(testCase)
-            % Check that the 2nd test in BatterySOCSysIntTest passed
-            testCase.verifyTrue(testCase.testResults(2).Passed, ...
-                'The 2nd test in BatterySOCSysIntTest failed.');
+            % 2. testi kontrol et
+            res = testCase.testResults(2);
+            testCase.verifyTrue(res.Passed, ...
+                sprintf(['2. test başarısız oldu.\n' ...
+                         'Test Adı: %s\n' ...
+                         'Detay: %s'], res.Name, localGetFailureDetails(res)));
         end
-        
+
         function verify_3(testCase)
-            % Check that the 3rd test in BatterySOCSysIntTest passed
-            testCase.verifyTrue(testCase.testResults(3).Passed, ...
-                'The 3rd test in BatterySOCSysIntTest failed.');
+            % 3. testi kontrol et
+            res = testCase.testResults(3);
+            testCase.verifyTrue(res.Passed, ...
+                sprintf(['3. test başarısız oldu.\n' ...
+                         'Test Adı: %s\n' ...
+                         'Detay: %s'], res.Name, localGetFailureDetails(res)));
         end
-        
+
         function verify_4(testCase)
-            % Check that the 4th test in BatterySOCSysIntTest passed
-            testCase.verifyTrue(testCase.testResults(4).Passed, ...
-                'The 4th test in BatterySOCSysIntTest failed.');
+            % 4. testi kontrol et
+            res = testCase.testResults(4);
+            testCase.verifyTrue(res.Passed, ...
+                sprintf(['4. test başarısız oldu.\n' ...
+                         'Test Adı: %s\n' ...
+                         'Detay: %s'], res.Name, localGetFailureDetails(res)));
         end
+    end
+end
+
+%% Yerel yardımcı fonksiyon
+function detailMsg = localGetFailureDetails(testResult)
+    % TestResult nesnesi içinde ek hata/ayrıntı varsa döndür, yoksa boş bırak.
+    if isfield(testResult.Details, 'DiagnosticRecord') && ~isempty(testResult.Details.DiagnosticRecord)
+        % DiagnosticRecord bazen çok detaylı olabilir; burada basitçe mesaj alıyoruz.
+        detailMsg = testResult.Details.DiagnosticRecord.Report;
+    else
+        detailMsg = 'Detaylı bilgi mevcut değil.';
     end
 end
