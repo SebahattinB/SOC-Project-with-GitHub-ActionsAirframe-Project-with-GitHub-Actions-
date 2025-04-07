@@ -26,3 +26,8 @@ jobs:
        
       - name: Run tests
         uses: matlab-actions/run-tests@v2
+        with:
+            test-results-simulink-test: test-results/simulinktest.mldatx
+            model-coverage-cobertura: test-results/modelcoverage.xml
+            test-results-pdf: test-results/pdf-results.pdf
+            select-by-folder: test
