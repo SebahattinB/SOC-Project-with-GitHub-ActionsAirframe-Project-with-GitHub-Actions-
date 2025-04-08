@@ -32,4 +32,4 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
            name: diffreports
-           path: ${{ test-results }}\*.pdf
+           path: ${{ github.workspace}}\*.pdf
