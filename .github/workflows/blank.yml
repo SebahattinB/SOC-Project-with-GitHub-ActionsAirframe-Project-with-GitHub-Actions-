@@ -26,7 +26,7 @@ jobs:
 
       - name: Run tests
         uses: matlab-actions/run-tests@v2
-        with:
+        strategy:
             matrix:      
             release: [R2025a,R2024b]
         with: 
