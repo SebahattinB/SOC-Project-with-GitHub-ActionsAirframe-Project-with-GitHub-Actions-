@@ -24,7 +24,7 @@ jobs:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it test
       - uses: actions/checkout@v4
         with:       
-            release: { R2025a,R2024b}
+            release: [R2025a,R2024b]
       - name: Run tests
         uses: matlab-actions/run-tests@v2
         with: 
