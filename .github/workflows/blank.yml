@@ -23,11 +23,11 @@ jobs:
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it test
       - uses: actions/checkout@v4
-
-      - name: Run tests
-        uses: matlab-actions/run-tests@v2
         with:       
             release: R2025a
+      - name: Run tests
+        uses: matlab-actions/run-tests@v2
+        with: 
             test-results-pdf: test-results/pdf-results.pdf
       - name: Upload Comparison Reports
         uses: actions/upload-artifact@v4
