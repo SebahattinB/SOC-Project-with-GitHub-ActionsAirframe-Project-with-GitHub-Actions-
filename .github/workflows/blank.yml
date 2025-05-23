@@ -20,15 +20,15 @@ jobs:
     # The type of runner that the job will run on
     runs-on: self-hosted
     # Steps represent a sequence of tasks that will be executed as part of the job
+    strategy:
+         matrix:
+            release: [R2025a,R2024b]
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it test
       - uses: actions/checkout@v4
 
       - name: Run tests
         uses: matlab-actions/run-tests@v2
-         strategy:
-           matrix:
-            release: [R2025a,R2024b]
         with: 
             test-results-pdf: test-results/pdf-results.pdf
       - name: Upload Comparison Reports
