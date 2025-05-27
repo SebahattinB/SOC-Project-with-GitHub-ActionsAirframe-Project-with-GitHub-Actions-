@@ -26,9 +26,7 @@ jobs:
 
       - name: Run tests
         uses: matlab-actions/run-tests@v2
-         strategy:
-           matrix:      
-             release: [R2025a,R2024b]
+
         with: 
             test-results-pdf: test-results/pdf-results.pdf
       - name: Upload Comparison Reports
